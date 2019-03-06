@@ -16,12 +16,24 @@ namespace CAFirstTask.Tests
             using (StreamWriter writer = new StreamWriter(tempFileName)) 
                 writer.Write(inputLines);
 
-            using (StreamReader reader = new StreamReader(tempFileName))
+            var actualResult = GetActualResult();
+
+            try
             {
-                var (start, finish, matrix) = Program.GetInputData(reader.ReadLine);
-                var resultChain = _finder.GetRoute(start, finish, matrix);
-                var actualResult = Program.ResultGenerate(resultChain);
-                return expectedResult.Equals(actualResult);
+                File.Delete(tempFileName);
+            }
+            catch (Exception) { }
+            
+            return expectedResult.Equals(actualResult);
+
+            string GetActualResult()
+            {
+                using (StreamReader reader = new StreamReader(tempFileName))
+                {
+                    var (start, finish, matrix) = Program.GetInputData(reader.ReadLine);
+                    var resultChain = _finder.GetRoute(start, finish, matrix);
+                    return Program.ResultGenerate(resultChain);
+                }
             }
         }
 
