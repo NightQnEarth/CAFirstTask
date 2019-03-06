@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,8 +33,13 @@ namespace CAFirstTask
             IEnumerable<Cell> GetNeighbours(Cell cell)
             {
                 for (int delta = -1; delta < 7; delta += 2)
-                    yield return new Cell(cell.Row + (delta < 2 ? delta : 0),
-                                          cell.Column + (delta > 2 ? delta - 4 : 0));
+                {
+                    var currentRow = cell.Row + (delta < 2 ? delta : 0);
+                    var currentColumn = cell.Column + (delta > 2 ? delta - 4 : 0);
+                    if (currentRow < 0 || currentRow >= matrix.GetLength(0) || 
+                        currentColumn < 0 || currentColumn >= matrix.GetLength(1)) continue;
+                    yield return new Cell(currentRow, currentColumn);
+                }
             }
             
             IEnumerable<Cell> RouteRestore()

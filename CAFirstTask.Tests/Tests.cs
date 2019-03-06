@@ -73,7 +73,7 @@ namespace CAFirstTask.Tests
         }
         
         [Test]
-        public void StartFinishCoincideTest()
+        public void StartAndFinishCoincideTest()
         {
             var inputLines = string.Join(
                 Environment.NewLine,
@@ -90,6 +90,114 @@ namespace CAFirstTask.Tests
                 Environment.NewLine,
                 "Y",
                 "2 2");
+            
+            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+        }
+        
+        [Test]
+        public void LeftOrRightTurnWhenMoveDownTest()
+        {
+            var inputLines = string.Join(
+                Environment.NewLine,
+                "5",
+                "5",
+                "1 1 1 1 1",
+                "1 0 0 0 1",
+                "1 0 1 0 1",
+                "1 0 0 0 1",
+                "1 1 1 1 1",
+                "2 3",
+                "4 3");
+            
+            var expectedResult = string.Join(
+                Environment.NewLine,
+                "Y",
+                "2 3",
+                "2 2",
+                "3 2",
+                "4 2",
+                "4 3");
+            
+            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+        }
+        
+        [Test]
+        public void LeftOrRightTurnWhenMoveUpTest()
+        {
+            var inputLines = string.Join(
+                Environment.NewLine,
+                "5",
+                "5",
+                "1 1 1 1 1",
+                "1 0 0 0 1",
+                "1 0 1 0 1",
+                "1 0 0 0 1",
+                "1 1 1 1 1",
+                "4 3",
+                "2 3");
+            
+            var expectedResult = string.Join(
+                Environment.NewLine,
+                "Y",
+                "4 3",
+                "4 2",
+                "3 2",
+                "2 2",
+                "2 3");
+            
+            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+        }
+        
+        [Test]
+        public void UpOrDownTurnWhenMoveRightTest()
+        {
+            var inputLines = string.Join(
+                Environment.NewLine,
+                "5",
+                "5",
+                "1 1 1 1 1",
+                "1 0 0 0 1",
+                "1 0 1 0 1",
+                "1 0 0 0 1",
+                "1 1 1 1 1",
+                "3 2",
+                "3 4");
+            
+            var expectedResult = string.Join(
+                Environment.NewLine,
+                "Y",
+                "3 2",
+                "2 2",
+                "2 3",
+                "2 4",
+                "3 4");
+            
+            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+        }
+        
+        [Test]
+        public void UpOrDownTurnWhenMoveLeftTest()
+        {
+            var inputLines = string.Join(
+                Environment.NewLine,
+                "5",
+                "5",
+                "1 1 1 1 1",
+                "1 0 0 0 1",
+                "1 0 1 0 1",
+                "1 0 0 0 1",
+                "1 1 1 1 1",
+                "3 4",
+                "3 2");
+            
+            var expectedResult = string.Join(
+                Environment.NewLine,
+                "Y",
+                "3 4",
+                "2 4",
+                "2 3",
+                "2 2",
+                "3 2");
             
             Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
         }
