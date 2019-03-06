@@ -8,6 +8,8 @@ namespace CAFirstTask
     {
         public IEnumerable<Cell> GetRoute(Cell start, Cell finish, bool[,] matrix)
         {
+            if (start.Equals(finish)) return new[] {finish};
+            
             var queue = new Queue<Cell>();
             queue.Enqueue(start);
             var visited = new HashSet<Cell>{start};
@@ -29,14 +31,13 @@ namespace CAFirstTask
             
             bool IsAccessibleCell(Cell cell) => matrix[cell.Row, cell.Column] && !visited.Contains(cell);
 
-            IEnumerable<Cell> GetNeighbours(Cell cell) =>
-                Enumerable.Range(-1, 3)
-                          .SelectMany(deltaRow => Enumerable.Range(-1, 3)
-                                                            .Where(deltaColumn =>
-                                                                       Math.Abs(deltaRow) + Math.Abs(deltaColumn) == 1)
-                                                            .Select(deltaColumn =>
-                                                                        new Cell(cell.Row + deltaRow, 
-                                                                                 cell.Column + deltaColumn)));
+            IEnumerable<Cell> GetNeighbours(Cell cell)
+            {
+                for (int delta = -1; delta < 7; delta += 2)
+                    yield return new Cell(cell.Row + (delta < 2 ? delta : 0),
+                                          cell.Column + (delta > 2 ? delta - 4 : 0));
+            }
+            
             IEnumerable<Cell> RouteRestore()
             {
                 var currentPoint = finish;

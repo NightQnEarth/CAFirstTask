@@ -50,5 +50,48 @@ namespace CAFirstTask.Tests
             
             Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
         }
+        
+        [Test]
+        public void NoWayTest()
+        {
+            var inputLines = string.Join(
+                Environment.NewLine,
+                "4",
+                "5",
+                "1 1 1 1 1",
+                "1 0 1 0 1",
+                "1 1 0 0 1",
+                "1 1 1 1 1",
+                "2 2",
+                "2 4");
+            
+            var expectedResult = string.Join(
+                Environment.NewLine,
+                "N");
+            
+            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+        }
+        
+        [Test]
+        public void StartFinishCoincideTest()
+        {
+            var inputLines = string.Join(
+                Environment.NewLine,
+                "4",
+                "5",
+                "1 1 1 1 1",
+                "1 0 1 0 1",
+                "1 0 0 0 1",
+                "1 1 1 1 1",
+                "2 2",
+                "2 2");
+            
+            var expectedResult = string.Join(
+                Environment.NewLine,
+                "Y",
+                "2 2");
+            
+            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+        }
     }
 }
