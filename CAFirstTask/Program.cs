@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-// ReSharper disable AssignNullToNotNullAttribute
-// ReSharper disable PossibleNullReferenceException
 
 namespace CAFirstTask
 {
-    public class Program
+    public static class Program
     {        
-        public static void Main(string[] args)
+        public static void Main()
         {
             ResultGenerate(null);
             var finder = new BreadthFirstSearch();
