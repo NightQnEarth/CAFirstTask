@@ -2,71 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-
 // ReSharper disable AssignNullToNotNullAttribute
 // ReSharper disable PossibleNullReferenceException
 
 namespace CAFirstTask
 {
-    struct Cell
-    {
-        public readonly int Row;
-        public readonly int Column;
-
-        public Cell(int row, int column)
-        {
-            Row = row;
-            Column = column;
-        }
-
-        public override string ToString() => $"({Row}, {Column})";
-    }
-
-    static class Program
+    public class Program
     {        
         public static void Main(string[] args)
         {
-            var (start, finish, matrix) = GetInputData();
-            var routeLength = GetRouteLength(start, finish, matrix);
+            ResultGenerate(null);
+            var finder = new BreadthFirstSearch();
+            var (start, finish, matrix) = GetInputData(Console.ReadLine);
+            var resultRoute = finder.GetRoute(start, finish, matrix);
             
-            Console.WriteLine(routeLength == null ? "NO" : $"YES\n{routeLength}");
+            Console.WriteLine(ResultGenerate(resultRoute));
         }
 
-        private static int? GetRouteLength(Cell start, Cell finish, bool[,] matrix)
-        {
-            var visited = new List<Cell>();
-            var queue = new Queue<Cell>();
-            queue.Enqueue(start);
-            visited.Add(start);
-            while (queue.Count != 0)
-            {
-                var currentCell = queue.Dequeue();
-                foreach (var neighbour in GetNeighbours(currentCell).Where(IsAccessibleCell))
-                {
-                    queue.Enqueue(neighbour);
-                    visited.Add(neighbour);
-                    if (neighbour.Equals(finish)) return visited.Count;
-                }
-            }
+        public static string ResultGenerate(List<Cell> route) => 
+            route == null ? "N" : string.Join(Environment.NewLine, "Y", string.Join(Environment.NewLine, route));
 
-            return null;
-            
-            bool IsAccessibleCell(Cell cell) => matrix[cell.Row, cell.Column] && !visited.Contains(cell);
-
-            IEnumerable<Cell> GetNeighbours(Cell cell) =>
-                Enumerable.Range(-1, 3)
-                          .SelectMany(deltaRow => Enumerable.Range(-1, 3)
-                                                            .Where(deltaColumn =>
-                                                                       Math.Abs(deltaRow) + Math.Abs(deltaColumn) == 1)
-                                                            .Select(deltaColumn =>
-                                                                        new Cell(cell.Row + deltaRow, 
-                                                                                 cell.Column + deltaColumn)));
-        }
-
-        private static (Cell start, Cell finish, bool[,] matrix) GetInputData()
+        public static (Cell start, Cell finish, bool[,] matrix) GetInputData(Func<string> lineReader)
         {   
-            var rowCount = int.Parse(Console.ReadLine().Trim());
-            var columnCount = int.Parse(Console.ReadLine().Trim());
+            var rowCount = int.Parse(lineReader().Trim());
+            var columnCount = int.Parse(lineReader().Trim());
             var matrix = new bool[rowCount, columnCount];
 
             for (int row = 0; row < rowCount; row++)
@@ -83,7 +42,7 @@ namespace CAFirstTask
 
             return (start, finish, matrix);
 
-            string[] ReadLineToArray() => Regex.Split(Console.ReadLine(), @"\W+")
+            string[] ReadLineToArray() => Regex.Split(lineReader(), @"\W+")
                                                .Where(str => str.Length > 0)
                                                .ToArray();
         }
