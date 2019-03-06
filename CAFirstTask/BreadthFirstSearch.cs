@@ -6,12 +6,13 @@ namespace CAFirstTask
 {
     public class BreadthFirstSearch
     {
-        public List<Cell> GetRoute(Cell start, Cell finish, bool[,] matrix)
+        public IEnumerable<Cell> GetRoute(Cell start, Cell finish, bool[,] matrix)
         {
-            var visited = new List<Cell>();
             var queue = new Queue<Cell>();
             queue.Enqueue(start);
-            visited.Add(start);
+            var visited = new HashSet<Cell>{start};
+            var parent = new Dictionary<Cell, Cell>{ {start, null} };
+            
             while (queue.Count != 0)
             {
                 var currentCell = queue.Dequeue();
@@ -19,7 +20,8 @@ namespace CAFirstTask
                 {
                     queue.Enqueue(neighbour);
                     visited.Add(neighbour);
-                    if (neighbour.Equals(finish)) return visited;
+                    parent.Add(neighbour, currentCell);
+                    if (neighbour.Equals(finish)) return RouteRestore().Reverse();
                 }
             }
 
@@ -35,6 +37,16 @@ namespace CAFirstTask
                                                             .Select(deltaColumn =>
                                                                         new Cell(cell.Row + deltaRow, 
                                                                                  cell.Column + deltaColumn)));
+            IEnumerable<Cell> RouteRestore()
+            {
+                var currentPoint = finish;
+                yield return currentPoint;
+                while (parent[currentPoint] != null)
+                {
+                    yield return parent[currentPoint];
+                    currentPoint = parent[currentPoint];
+                }
+            }
         }
     }
 }
