@@ -9,7 +9,6 @@ namespace CAFirstTask
     {        
         public static void Main()
         {
-            ResultGenerate(null);
             var finder = new BreadthFirstSearch();
             var (start, finish, matrix) = GetInputData(Console.ReadLine);
             var resultRoute = finder.GetRoute(start, finish, matrix);
