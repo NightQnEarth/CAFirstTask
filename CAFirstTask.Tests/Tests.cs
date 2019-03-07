@@ -76,10 +76,8 @@ namespace CAFirstTask.Tests
                 "1 1 1 1 1",
                 "2 2",
                 "2 4");
-            
-            var expectedResult = string.Join(
-                Environment.NewLine,
-                "N");
+
+            const string expectedResult = "N";
             
             Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
         }
@@ -100,9 +98,7 @@ namespace CAFirstTask.Tests
                 "2 2",
                 "5 4");
             
-            var expectedResult = string.Join(
-                Environment.NewLine,
-                "N");
+            const string expectedResult = "N";
             
             Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
         }

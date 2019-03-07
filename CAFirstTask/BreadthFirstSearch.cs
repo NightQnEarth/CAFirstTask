@@ -12,23 +12,23 @@ namespace CAFirstTask
             var queue = new Queue<Cell>();
             queue.Enqueue(start);
             var visited = new HashSet<Cell>{start};
-            var parent = new Dictionary<Cell, Cell>{ {start, null} };
+            var track = new Dictionary<Cell, Cell>{ {start, null} };
             
             while (queue.Count != 0)
             {
                 var currentCell = queue.Dequeue();
-                foreach (var neighbour in GetNeighbours(currentCell).Where(IsAccessibleCell))
+                foreach (var neighbour in GetNeighbours(currentCell).Where(IsAccessibleNotVisitedCell))
                 {
                     queue.Enqueue(neighbour);
                     visited.Add(neighbour);
-                    parent.Add(neighbour, currentCell);
+                    track.Add(neighbour, currentCell);
                     if (neighbour.Equals(finish)) return RouteRestore().Reverse();
                 }
             }
 
             return null;
             
-            bool IsAccessibleCell(Cell cell) => matrix[cell.Row, cell.Column] && !visited.Contains(cell);
+            bool IsAccessibleNotVisitedCell(Cell cell) => matrix[cell.Row, cell.Column] && !visited.Contains(cell);
 
             IEnumerable<Cell> GetNeighbours(Cell cell)
             {
@@ -46,10 +46,10 @@ namespace CAFirstTask
             {
                 var currentPoint = finish;
                 yield return currentPoint;
-                while (parent[currentPoint] != null)
+                while (track[currentPoint] != null)
                 {
-                    yield return parent[currentPoint];
-                    currentPoint = parent[currentPoint];
+                    yield return track[currentPoint];
+                    currentPoint = track[currentPoint];
                 }
             }
         }
