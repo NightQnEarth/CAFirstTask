@@ -11,7 +11,6 @@ namespace CAFirstTask
             
             var queue = new Queue<Cell>();
             queue.Enqueue(start);
-            var visited = new HashSet<Cell>{start};
             var track = new Dictionary<Cell, Cell>{ {start, null} };
             
             while (queue.Count != 0)
@@ -20,7 +19,6 @@ namespace CAFirstTask
                 foreach (var neighbour in GetNeighbours(currentCell).Where(IsAccessibleNotVisitedCell))
                 {
                     queue.Enqueue(neighbour);
-                    visited.Add(neighbour);
                     track.Add(neighbour, currentCell);
                     if (neighbour.Equals(finish)) return RouteRestore().Reverse();
                 }
@@ -28,7 +26,7 @@ namespace CAFirstTask
 
             return null;
             
-            bool IsAccessibleNotVisitedCell(Cell cell) => matrix[cell.Row, cell.Column] && !visited.Contains(cell);
+            bool IsAccessibleNotVisitedCell(Cell cell) => matrix[cell.Row, cell.Column] && !track.ContainsKey(cell);
 
             IEnumerable<Cell> GetNeighbours(Cell cell)
             {
