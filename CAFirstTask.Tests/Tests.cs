@@ -85,6 +85,29 @@ namespace CAFirstTask.Tests
         }
         
         [Test]
+        public void UnreachableFinishTest()
+        {
+            var inputLines = string.Join(
+                Environment.NewLine,
+                "6",
+                "6",
+                "1 1 1 1 1 1",
+                "1 0 0 0 0 1",
+                "1 0 0 0 0 1",
+                "1 0 0 1 0 1",
+                "1 0 1 0 1 1",
+                "1 1 1 1 1 1",
+                "2 2",
+                "5 4");
+            
+            var expectedResult = string.Join(
+                Environment.NewLine,
+                "N");
+            
+            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+        }
+        
+        [Test]
         public void StartAndFinishCoincideTest()
         {
             var inputLines = string.Join(
@@ -210,6 +233,100 @@ namespace CAFirstTask.Tests
                 "2 3",
                 "2 2",
                 "3 2");
+            
+            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+        }
+        
+        [Test]
+        public void LabyrinthWithoutWallsMoveDownTest()
+        {
+            var inputLines = string.Join(
+                Environment.NewLine,
+                "6",
+                "6",
+                "1 1 1 1 1 1",
+                "1 0 0 0 0 1",
+                "1 0 0 0 0 1",
+                "1 0 0 0 0 1",
+                "1 0 0 0 0 1",
+                "1 1 1 1 1 1",
+                "2 2",
+                "5 5");
+            
+            var expectedResult = string.Join(
+                Environment.NewLine,
+                "Y",
+                "2 2",
+                "3 2",
+                "4 2",
+                "5 2",
+                "5 3",
+                "5 4",
+                "5 5");
+            
+            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+        }
+        
+        [Test]
+        public void LabyrinthWithoutWallsMoveUpTest()
+        {
+            var inputLines = string.Join(
+                Environment.NewLine,
+                "6",
+                "6",
+                "1 1 1 1 1 1",
+                "1 0 0 0 0 1",
+                "1 0 0 0 0 1",
+                "1 0 0 0 0 1",
+                "1 0 0 0 0 1",
+                "1 1 1 1 1 1",
+                "5 5",
+                "2 2");
+            
+            var expectedResult = string.Join(
+                Environment.NewLine,
+                "Y",
+                "5 5",
+                "4 5",
+                "3 5",
+                "2 5",
+                "2 4",
+                "2 3",
+                "2 2");
+            
+            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+        }
+        
+        [Test]
+        public void LabyrinthWithoutWallsAndBordersTest()
+        {
+            var inputLines = string.Join(
+                Environment.NewLine,
+                "6",
+                "6",
+                "0 0 0 0 0 0",
+                "0 0 0 0 0 0",
+                "0 0 0 0 0 0",
+                "0 0 0 0 0 0",
+                "0 0 0 0 0 0",
+                "0 0 0 0 0 0",
+                "1 1",
+                "6 6");
+            
+            var expectedResult = string.Join(
+                Environment.NewLine,
+                "Y",
+                "1 1",
+                "2 1",
+                "3 1",
+                "4 1",
+                "5 1",
+                "6 1",
+                "6 2",
+                "6 3",
+                "6 4",
+                "6 5",
+                "6 6");
             
             Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
         }
