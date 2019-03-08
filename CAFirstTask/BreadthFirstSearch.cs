@@ -16,7 +16,7 @@ namespace CAFirstTask
             while (queue.Count != 0)
             {
                 var currentCell = queue.Dequeue();
-                foreach (var neighbour in GetNeighbours(currentCell).Where(IsAccessibleNotVisitedCell))
+                foreach (var neighbour in GetAccessNeighbours(currentCell).Where(cell => !track.ContainsKey(cell)))
                 {
                     queue.Enqueue(neighbour);
                     track.Add(neighbour, currentCell);
@@ -26,16 +26,16 @@ namespace CAFirstTask
 
             return null;
             
-            bool IsAccessibleNotVisitedCell(Cell cell) => matrix[cell.Row, cell.Column] && !track.ContainsKey(cell);
-
-            IEnumerable<Cell> GetNeighbours(Cell cell)
+            IEnumerable<Cell> GetAccessNeighbours(Cell cell)
             {
                 for (int delta = -1; delta < 7; delta += 2)
                 {
                     var currentRow = cell.Row + (delta < 2 ? delta : 0);
                     var currentColumn = cell.Column + (delta > 2 ? delta - 4 : 0);
-                    if (currentRow < 0 || currentRow >= matrix.GetLength(0) || 
-                        currentColumn < 0 || currentColumn >= matrix.GetLength(1)) continue;
+                    if (currentRow < 0 ||  currentColumn < 0 || 
+                        currentRow >= matrix.GetLength(0) ||
+                        currentColumn >= matrix.GetLength(1) || 
+                        !matrix[currentRow, currentColumn]) continue;
                     yield return new Cell(currentRow, currentColumn);
                 }
             }

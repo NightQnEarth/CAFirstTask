@@ -17,12 +17,7 @@ namespace CAFirstTask
         }
 
         public static string ResultGenerate(IEnumerable<Cell> route) => 
-            route == null ?
-                "N" :
-                string.Join(Environment.NewLine,
-                            "Y",
-                            string.Join(Environment.NewLine, 
-                                        route.Select(cell => $"{cell.Row + 1} {cell.Column + 1}")));
+            route == null ? "N" : string.Join(Environment.NewLine, "Y", string.Join(Environment.NewLine, route));
 
         public static (Cell start, Cell finish, bool[,] matrix) GetInputData(Func<string> lineReader)
         {   
