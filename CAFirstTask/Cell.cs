@@ -16,6 +16,6 @@ namespace CAFirstTask
         public override bool Equals(object obj) => 
             obj is Cell cell && cell.Row == Row && cell.Column == Column;
 
-        public override int GetHashCode() => 1039 * Row + Column;
+        public override int GetHashCode() => unchecked((Row * 397) ^ Column);
     }
 }
