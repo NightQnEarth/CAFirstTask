@@ -7,13 +7,13 @@ namespace CAFirstTask.Tests
     [TestFixture]
     public class Tests
     {
-        private readonly BreadthFirstSearch _finder = new BreadthFirstSearch();
+        private readonly BreadthFirstSearch finder = new BreadthFirstSearch();
 
         private bool CheckCorrect(string inputLines, string expectedResult)
         {
             var tempFileName = Path.GetTempFileName();
-            
-            using (StreamWriter writer = new StreamWriter(tempFileName)) 
+
+            using (var writer = new StreamWriter(tempFileName))
                 writer.Write(inputLines);
 
             var actualResult = GetActualResult();
@@ -23,15 +23,15 @@ namespace CAFirstTask.Tests
                 File.Delete(tempFileName);
             }
             catch (IOException) { }
-            
+
             return expectedResult.Equals(actualResult);
 
             string GetActualResult()
             {
-                using (StreamReader reader = new StreamReader(tempFileName))
+                using (var reader = new StreamReader(tempFileName))
                 {
                     var (start, finish, matrix) = Program.GetInputData(reader.ReadLine);
-                    var resultChain = _finder.GetRoute(start, finish, matrix);
+                    var resultChain = finder.GetRoute(start, finish, matrix);
                     return Program.ResultGenerate(resultChain);
                 }
             }
@@ -50,7 +50,7 @@ namespace CAFirstTask.Tests
                 "1 1 1 1 1",
                 "2 2",
                 "2 4");
-            
+
             var expectedResult = string.Join(
                 Environment.NewLine,
                 "Y",
@@ -59,10 +59,10 @@ namespace CAFirstTask.Tests
                 "3 3",
                 "3 4",
                 "2 4");
-            
+
             Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
         }
-        
+
         [Test]
         public void NoWayTest()
         {
@@ -78,10 +78,10 @@ namespace CAFirstTask.Tests
                 "2 4");
 
             const string expectedResult = "N";
-            
+
             Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
         }
-        
+
         [Test]
         public void UnreachableFinishTest()
         {
@@ -97,12 +97,12 @@ namespace CAFirstTask.Tests
                 "1 1 1 1 1 1",
                 "2 2",
                 "5 4");
-            
+
             const string expectedResult = "N";
-            
+
             Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
         }
-        
+
         [Test]
         public void StartAndFinishCoincideTest()
         {
@@ -116,15 +116,15 @@ namespace CAFirstTask.Tests
                 "1 1 1 1 1",
                 "2 2",
                 "2 2");
-            
+
             var expectedResult = string.Join(
                 Environment.NewLine,
                 "Y",
                 "2 2");
-            
+
             Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
         }
-        
+
         [Test]
         public void LeftOrRightTurnWhenMoveDownTest()
         {
@@ -139,7 +139,7 @@ namespace CAFirstTask.Tests
                 "1 1 1 1 1",
                 "2 3",
                 "4 3");
-            
+
             var expectedResult = string.Join(
                 Environment.NewLine,
                 "Y",
@@ -148,10 +148,10 @@ namespace CAFirstTask.Tests
                 "3 2",
                 "4 2",
                 "4 3");
-            
+
             Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
         }
-        
+
         [Test]
         public void LeftOrRightTurnWhenMoveUpTest()
         {
@@ -166,7 +166,7 @@ namespace CAFirstTask.Tests
                 "1 1 1 1 1",
                 "4 3",
                 "2 3");
-            
+
             var expectedResult = string.Join(
                 Environment.NewLine,
                 "Y",
@@ -175,10 +175,10 @@ namespace CAFirstTask.Tests
                 "3 2",
                 "2 2",
                 "2 3");
-            
+
             Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
         }
-        
+
         [Test]
         public void UpOrDownTurnWhenMoveRightTest()
         {
@@ -193,7 +193,7 @@ namespace CAFirstTask.Tests
                 "1 1 1 1 1",
                 "3 2",
                 "3 4");
-            
+
             var expectedResult = string.Join(
                 Environment.NewLine,
                 "Y",
@@ -202,10 +202,10 @@ namespace CAFirstTask.Tests
                 "2 3",
                 "2 4",
                 "3 4");
-            
+
             Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
         }
-        
+
         [Test]
         public void UpOrDownTurnWhenMoveLeftTest()
         {
@@ -220,7 +220,7 @@ namespace CAFirstTask.Tests
                 "1 1 1 1 1",
                 "3 4",
                 "3 2");
-            
+
             var expectedResult = string.Join(
                 Environment.NewLine,
                 "Y",
@@ -229,10 +229,10 @@ namespace CAFirstTask.Tests
                 "2 3",
                 "2 2",
                 "3 2");
-            
+
             Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
         }
-        
+
         [Test]
         public void LabyrinthWithoutWallsMoveDownTest()
         {
@@ -248,7 +248,7 @@ namespace CAFirstTask.Tests
                 "1 1 1 1 1 1",
                 "2 2",
                 "5 5");
-            
+
             var expectedResult = string.Join(
                 Environment.NewLine,
                 "Y",
@@ -259,10 +259,10 @@ namespace CAFirstTask.Tests
                 "5 3",
                 "5 4",
                 "5 5");
-            
+
             Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
         }
-        
+
         [Test]
         public void LabyrinthWithoutWallsMoveUpTest()
         {
@@ -278,7 +278,7 @@ namespace CAFirstTask.Tests
                 "1 1 1 1 1 1",
                 "5 5",
                 "2 2");
-            
+
             var expectedResult = string.Join(
                 Environment.NewLine,
                 "Y",
@@ -289,10 +289,10 @@ namespace CAFirstTask.Tests
                 "2 4",
                 "2 3",
                 "2 2");
-            
+
             Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
         }
-        
+
         [Test]
         public void LabyrinthWithoutWallsAndBordersTest()
         {
@@ -308,7 +308,7 @@ namespace CAFirstTask.Tests
                 "0 0 0 0 0 0",
                 "1 1",
                 "6 6");
-            
+
             var expectedResult = string.Join(
                 Environment.NewLine,
                 "Y",
@@ -323,7 +323,7 @@ namespace CAFirstTask.Tests
                 "6 4",
                 "6 5",
                 "6 6");
-            
+
             Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
         }
     }

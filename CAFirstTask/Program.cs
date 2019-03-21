@@ -6,21 +6,21 @@ using System.Text.RegularExpressions;
 namespace CAFirstTask
 {
     public static class Program
-    {        
+    {
         public static void Main()
         {
             var finder = new BreadthFirstSearch();
             var (start, finish, matrix) = GetInputData(Console.ReadLine);
             var resultRoute = finder.GetRoute(start, finish, matrix);
-            
+
             Console.WriteLine(ResultGenerate(resultRoute));
         }
 
-        public static string ResultGenerate(IEnumerable<Cell> route) => 
+        public static string ResultGenerate(IEnumerable<Cell> route) =>
             route == null ? "N" : string.Join(Environment.NewLine, "Y", string.Join(Environment.NewLine, route));
 
         public static (Cell start, Cell finish, bool[,] matrix) GetInputData(Func<string> lineReader)
-        {   
+        {
             var rowCount = int.Parse(lineReader().Trim());
             var columnCount = int.Parse(lineReader().Trim());
             var matrix = new bool[rowCount, columnCount];
