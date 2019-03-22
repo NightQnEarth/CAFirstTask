@@ -7,9 +7,11 @@ namespace CAFirstTask.Tests
     [TestFixture]
     public class Tests
     {
+        private const string ExpectedNegativeResult = "N";
+
         private readonly BreadthFirstSearch finder = new BreadthFirstSearch();
 
-        private bool CheckCorrect(string inputLines, string expectedResult)
+        private string GetActualResult(string inputLines)
         {
             var tempFileName = Path.GetTempFileName();
 
@@ -24,7 +26,7 @@ namespace CAFirstTask.Tests
             }
             catch (IOException) { }
 
-            return expectedResult.Equals(actualResult);
+            return actualResult;
 
             string GetActualResult()
             {
@@ -60,7 +62,7 @@ namespace CAFirstTask.Tests
                 "3 4",
                 "2 4");
 
-            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+            Assert.AreEqual(GetActualResult(inputLines), expectedResult);
         }
 
         [Test]
@@ -77,9 +79,7 @@ namespace CAFirstTask.Tests
                 "2 2",
                 "2 4");
 
-            const string expectedResult = "N";
-
-            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+            Assert.AreEqual(GetActualResult(inputLines), ExpectedNegativeResult);
         }
 
         [Test]
@@ -98,9 +98,7 @@ namespace CAFirstTask.Tests
                 "2 2",
                 "5 4");
 
-            const string expectedResult = "N";
-
-            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+            Assert.AreEqual(GetActualResult(inputLines), ExpectedNegativeResult);
         }
 
         [Test]
@@ -122,7 +120,7 @@ namespace CAFirstTask.Tests
                 "Y",
                 "2 2");
 
-            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+            Assert.AreEqual(GetActualResult(inputLines), expectedResult);
         }
 
         [Test]
@@ -149,7 +147,7 @@ namespace CAFirstTask.Tests
                 "4 2",
                 "4 3");
 
-            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+            Assert.AreEqual(GetActualResult(inputLines), expectedResult);
         }
 
         [Test]
@@ -176,7 +174,7 @@ namespace CAFirstTask.Tests
                 "2 2",
                 "2 3");
 
-            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+            Assert.AreEqual(GetActualResult(inputLines), expectedResult);
         }
 
         [Test]
@@ -203,7 +201,7 @@ namespace CAFirstTask.Tests
                 "2 4",
                 "3 4");
 
-            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+            Assert.AreEqual(GetActualResult(inputLines), expectedResult);
         }
 
         [Test]
@@ -230,7 +228,7 @@ namespace CAFirstTask.Tests
                 "2 2",
                 "3 2");
 
-            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+            Assert.AreEqual(GetActualResult(inputLines), expectedResult);
         }
 
         [Test]
@@ -260,7 +258,7 @@ namespace CAFirstTask.Tests
                 "5 4",
                 "5 5");
 
-            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+            Assert.AreEqual(GetActualResult(inputLines), expectedResult);
         }
 
         [Test]
@@ -290,7 +288,7 @@ namespace CAFirstTask.Tests
                 "2 3",
                 "2 2");
 
-            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+            Assert.AreEqual(GetActualResult(inputLines), expectedResult);
         }
 
         [Test]
@@ -324,7 +322,7 @@ namespace CAFirstTask.Tests
                 "6 5",
                 "6 6");
 
-            Assert.IsTrue(CheckCorrect(inputLines, expectedResult));
+            Assert.AreEqual(GetActualResult(inputLines), expectedResult);
         }
     }
 }
