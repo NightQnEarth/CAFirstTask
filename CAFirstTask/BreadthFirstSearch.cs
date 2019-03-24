@@ -5,7 +5,7 @@ namespace CAFirstTask
 {
     public class BreadthFirstSearch
     {
-        public IEnumerable<Cell> GetRoute(Cell start, Cell finish, bool[,] matrix)
+        public IEnumerable<Cell> GetRoute(CellState[,] labyrinth, Cell start, Cell finish)
         {
             if (start.Equals(finish)) return new[] { finish };
 
@@ -33,9 +33,9 @@ namespace CAFirstTask
                     var currentRow = cell.Row + (delta < 2 ? delta : 0);
                     var currentColumn = cell.Column + (delta > 2 ? delta - 4 : 0);
                     if (currentRow < 0 || currentColumn < 0 ||
-                        currentRow >= matrix.GetLength(0) ||
-                        currentColumn >= matrix.GetLength(1) ||
-                        !matrix[currentRow, currentColumn]) continue;
+                        currentRow >= labyrinth.GetLength(0) ||
+                        currentColumn >= labyrinth.GetLength(1) ||
+                        labyrinth[currentRow, currentColumn] == CellState.Wall) continue;
                     yield return new Cell(currentRow, currentColumn);
                 }
             }

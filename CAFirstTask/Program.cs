@@ -10,8 +10,8 @@ namespace CAFirstTask
         public static void Main()
         {
             var finder = new BreadthFirstSearch();
-            var (start, finish, matrix) = GetInputData(Console.ReadLine);
-            var resultRoute = finder.GetRoute(start, finish, matrix);
+            var (labyrinth, start, finish) = GetInputData(Console.ReadLine);
+            var resultRoute = finder.GetRoute(labyrinth, start, finish);
 
             Console.WriteLine(ResultGenerate(resultRoute));
         }
@@ -19,17 +19,17 @@ namespace CAFirstTask
         public static string ResultGenerate(IEnumerable<Cell> route) =>
             route == null ? "N" : string.Join(Environment.NewLine, "Y", string.Join(Environment.NewLine, route));
 
-        public static (Cell start, Cell finish, bool[,] matrix) GetInputData(Func<string> lineReader)
+        public static (CellState[,] labyrinth, Cell start, Cell finish) GetInputData(Func<string> lineReader)
         {
             var rowCount = int.Parse(lineReader().Trim());
             var columnCount = int.Parse(lineReader().Trim());
-            var matrix = new bool[rowCount, columnCount];
+            var labyrinth = new CellState[rowCount, columnCount];
 
             for (int row = 0; row < rowCount; row++)
             {
                 var currentRow = ReadLineToArray();
                 for (int column = 0; column < columnCount; column++)
-                    matrix[row, column] = int.Parse(currentRow[column].Trim()) == 0;
+                    labyrinth[row, column] = int.Parse(currentRow[column]) == 0 ? CellState.Free : CellState.Wall;
             }
 
             var startAsArray = ReadLineToArray();
@@ -37,7 +37,7 @@ namespace CAFirstTask
             var finishAsArray = ReadLineToArray();
             var finish = new Cell(int.Parse(finishAsArray[0]) - 1, int.Parse(finishAsArray[1]) - 1);
 
-            return (start, finish, matrix);
+            return (labyrinth, start, finish);
 
             string[] ReadLineToArray() => Regex.Split(lineReader(), @"\W+")
                                                .Where(str => str.Length > 0)

@@ -32,15 +32,15 @@ namespace CAFirstTask.Tests
             {
                 using (var reader = new StreamReader(tempFileName))
                 {
-                    var (start, finish, matrix) = Program.GetInputData(reader.ReadLine);
-                    var resultChain = finder.GetRoute(start, finish, matrix);
-                    return Program.ResultGenerate(resultChain);
+                    var (labyrinth, start, finish) = Program.GetInputData(reader.ReadLine);
+                    var resultRoute = finder.GetRoute(labyrinth, start, finish);
+                    return Program.ResultGenerate(resultRoute);
                 }
             }
         }
 
         [Test]
-        public void DescriptionFromTaskTest()
+        public void SampleLabyrinthFromReadme_ReturnExpectedRoute()
         {
             var inputLines = string.Join(
                 Environment.NewLine,
@@ -62,11 +62,11 @@ namespace CAFirstTask.Tests
                 "3 4",
                 "2 4");
 
-            Assert.AreEqual(GetActualResult(inputLines), expectedResult);
+            Assert.AreEqual(expectedResult, GetActualResult(inputLines));
         }
 
         [Test]
-        public void NoWayTest()
+        public void LabyrinthWithWallsAroundStart_ReturnN()
         {
             var inputLines = string.Join(
                 Environment.NewLine,
@@ -79,11 +79,11 @@ namespace CAFirstTask.Tests
                 "2 2",
                 "2 4");
 
-            Assert.AreEqual(GetActualResult(inputLines), ExpectedNegativeResult);
+            Assert.AreEqual(ExpectedNegativeResult, GetActualResult(inputLines));
         }
 
         [Test]
-        public void UnreachableFinishTest()
+        public void LabyrinthWithUnreachableFinish_ReturnN()
         {
             var inputLines = string.Join(
                 Environment.NewLine,
@@ -98,11 +98,11 @@ namespace CAFirstTask.Tests
                 "2 2",
                 "5 4");
 
-            Assert.AreEqual(GetActualResult(inputLines), ExpectedNegativeResult);
+            Assert.AreEqual(ExpectedNegativeResult, GetActualResult(inputLines));
         }
 
         [Test]
-        public void StartAndFinishCoincideTest()
+        public void LabyrinthWhereStartAndFinishCoincide_ReturnRoute()
         {
             var inputLines = string.Join(
                 Environment.NewLine,
@@ -120,11 +120,11 @@ namespace CAFirstTask.Tests
                 "Y",
                 "2 2");
 
-            Assert.AreEqual(GetActualResult(inputLines), expectedResult);
+            Assert.AreEqual(expectedResult, GetActualResult(inputLines));
         }
 
         [Test]
-        public void LeftOrRightTurnWhenMoveDownTest()
+        public void LabyrinthWithLeftOrRightTurnChoiceWhenMoveDown_ReturnRouteThrowLeftWay()
         {
             var inputLines = string.Join(
                 Environment.NewLine,
@@ -147,11 +147,11 @@ namespace CAFirstTask.Tests
                 "4 2",
                 "4 3");
 
-            Assert.AreEqual(GetActualResult(inputLines), expectedResult);
+            Assert.AreEqual(expectedResult, GetActualResult(inputLines));
         }
 
         [Test]
-        public void LeftOrRightTurnWhenMoveUpTest()
+        public void LabyrinthWithLeftOrRightTurnChoiceWhenMoveUp_ReturnRouteThrowLeftWay()
         {
             var inputLines = string.Join(
                 Environment.NewLine,
@@ -174,11 +174,11 @@ namespace CAFirstTask.Tests
                 "2 2",
                 "2 3");
 
-            Assert.AreEqual(GetActualResult(inputLines), expectedResult);
+            Assert.AreEqual(expectedResult, GetActualResult(inputLines));
         }
 
         [Test]
-        public void UpOrDownTurnWhenMoveRightTest()
+        public void LabyrinthWithUpOrDownTurnChoiceWhenMoveRight_ReturnRouteThrowUpWay()
         {
             var inputLines = string.Join(
                 Environment.NewLine,
@@ -201,11 +201,11 @@ namespace CAFirstTask.Tests
                 "2 4",
                 "3 4");
 
-            Assert.AreEqual(GetActualResult(inputLines), expectedResult);
+            Assert.AreEqual(expectedResult, GetActualResult(inputLines));
         }
 
         [Test]
-        public void UpOrDownTurnWhenMoveLeftTest()
+        public void LabyrinthWithUpOrDownTurnChoiceWhenMoveLeft_ReturnRouteThrowUpWay()
         {
             var inputLines = string.Join(
                 Environment.NewLine,
@@ -228,11 +228,11 @@ namespace CAFirstTask.Tests
                 "2 2",
                 "3 2");
 
-            Assert.AreEqual(GetActualResult(inputLines), expectedResult);
+            Assert.AreEqual(expectedResult, GetActualResult(inputLines));
         }
 
         [Test]
-        public void LabyrinthWithoutWallsMoveDownTest()
+        public void LabyrinthWithoutInteriorWallsWithFinishAtRightBottomCorner_ReturnRouteAlongLeftBorderAndBottom()
         {
             var inputLines = string.Join(
                 Environment.NewLine,
@@ -258,11 +258,11 @@ namespace CAFirstTask.Tests
                 "5 4",
                 "5 5");
 
-            Assert.AreEqual(GetActualResult(inputLines), expectedResult);
+            Assert.AreEqual(expectedResult, GetActualResult(inputLines));
         }
 
         [Test]
-        public void LabyrinthWithoutWallsMoveUpTest()
+        public void LabyrinthWithoutInteriorWallsWithFinishAtTopLeftCorner_ReturnRouteAlongRightBorderAndTop()
         {
             var inputLines = string.Join(
                 Environment.NewLine,
@@ -288,11 +288,11 @@ namespace CAFirstTask.Tests
                 "2 3",
                 "2 2");
 
-            Assert.AreEqual(GetActualResult(inputLines), expectedResult);
+            Assert.AreEqual(expectedResult, GetActualResult(inputLines));
         }
 
         [Test]
-        public void LabyrinthWithoutWallsAndBordersTest()
+        public void LabyrinthGenerallyWithoutWallsWithFinishAtRightBottomCorner_ReturnRouteAlongLeftBorderAndBottom()
         {
             var inputLines = string.Join(
                 Environment.NewLine,
@@ -322,7 +322,7 @@ namespace CAFirstTask.Tests
                 "6 5",
                 "6 6");
 
-            Assert.AreEqual(GetActualResult(inputLines), expectedResult);
+            Assert.AreEqual(expectedResult, GetActualResult(inputLines));
         }
     }
 }

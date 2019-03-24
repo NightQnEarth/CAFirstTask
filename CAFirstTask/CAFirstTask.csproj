@@ -41,6 +41,7 @@
     <ItemGroup>
         <Compile Include="BreadthFirstSearch.cs" />
         <Compile Include="Cell.cs" />
+        <Compile Include="CellState.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
