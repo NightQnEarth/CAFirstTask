@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace CAFirstTask
 {
-    public class BreadthFirstSearch
+    public static class BreadthFirstSearch
     {
-        public IEnumerable<Cell> GetRoute(CellState[,] labyrinth, Cell start, Cell finish)
+        public static IEnumerable<Cell> GetRoute(CellState[,] labyrinth, Cell start, Cell finish)
         {
             if (start.Equals(finish)) return new[] { finish };
 

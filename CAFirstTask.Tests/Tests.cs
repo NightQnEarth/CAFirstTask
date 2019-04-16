@@ -9,9 +9,7 @@ namespace CAFirstTask.Tests
     {
         private const string ExpectedNegativeResult = "N";
 
-        private readonly BreadthFirstSearch finder = new BreadthFirstSearch();
-
-        private string GetActualResult(string inputLines)
+        private static string GetActualResult(string inputLines)
         {
             var tempFileName = Path.GetTempFileName();
 
@@ -33,7 +31,7 @@ namespace CAFirstTask.Tests
                 using (var reader = new StreamReader(tempFileName))
                 {
                     var (labyrinth, start, finish) = DataParser.GetInputData(reader.ReadLine);
-                    var resultRoute = finder.GetRoute(labyrinth, start, finish);
+                    var resultRoute = BreadthFirstSearch.GetRoute(labyrinth, start, finish);
                     return DataParser.ResultGenerate(resultRoute);
                 }
             }

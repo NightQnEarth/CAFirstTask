@@ -6,9 +6,8 @@ namespace CAFirstTask
     {
         public static void Main()
         {
-            var finder = new BreadthFirstSearch();
             var (labyrinth, start, finish) = DataParser.GetInputData(Console.ReadLine);
-            var resultRoute = finder.GetRoute(labyrinth, start, finish);
+            var resultRoute = BreadthFirstSearch.GetRoute(labyrinth, start, finish);
 
             Console.WriteLine(DataParser.ResultGenerate(resultRoute));
         }
