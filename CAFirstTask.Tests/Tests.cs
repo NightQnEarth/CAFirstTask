@@ -32,9 +32,9 @@ namespace CAFirstTask.Tests
             {
                 using (var reader = new StreamReader(tempFileName))
                 {
-                    var (labyrinth, start, finish) = Program.GetInputData(reader.ReadLine);
+                    var (labyrinth, start, finish) = DataParser.GetInputData(reader.ReadLine);
                     var resultRoute = finder.GetRoute(labyrinth, start, finish);
-                    return Program.ResultGenerate(resultRoute);
+                    return DataParser.ResultGenerate(resultRoute);
                 }
             }
         }
